@@ -20,9 +20,11 @@ def take_center_N_pixels(in_img,im_size):
 
 sz = 512
 
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
 matting_model = ct.models.model.MLModel('rvm_mobilenetv3_1280x720_s0.375_int8.mlmodel')
-# anime_model = torch.hub.load("bryandlee/animegan2-pytorch:main", "generator", pretrained="face_paint_512_v2")
-# face2paint = torch.hub.load("bryandlee/animegan2-pytorch:main", "face2paint", size=512)
+anime_model = torch.hub.load("bryandlee/animegan2-pytorch:main", "generator", pretrained="face_paint_512_v2", device=device).eval()
+face2paint = torch.hub.load("bryandlee/animegan2-pytorch:main", "face2paint", device=device, size=sz)
 
 r1, r2, r3, r4 = None, None, None, None
 
@@ -74,16 +76,18 @@ for i in tqdm(range(num_frames)):
 
         out_img_small = take_center_N_pixels(out_img,sz)
 
+        in_img = PIL.Image.fromarray(out_img_small)
+
         # img = Image.open(...).convert("RGB")
-        # out = face2paint(anime_model, out_img_small)
+        out = face2paint(model=anime_model, img=in_img, size=sz)
 
         if i == (num_frames - 1):
-            imshow(str(retval),cv2.cvtColor(out_img_small, cv2.COLOR_RGB2BGR))
+            imshow(str(retval),cv2.cvtColor(np.array(out), cv2.COLOR_RGB2BGR))
             cv2.setWindowProperty(str(retval), cv2.WND_PROP_TOPMOST, 0)
             cv2.waitKey(1)
             print('end loops')
         else:
-            imshow(str(retval),cv2.cvtColor(out_img_small, cv2.COLOR_RGB2BGR))
+            imshow(str(retval),cv2.cvtColor(np.array(out), cv2.COLOR_RGB2BGR))
             cv2.setWindowProperty(str(retval), cv2.WND_PROP_TOPMOST, 1)
             cv2.waitKey(1)
 
