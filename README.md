@@ -6,5 +6,5 @@ This is a simple learning experiment to see if i can take a webcam video and app
 Robust Video Matting:
   https://github.com/PeterL1n/RobustVideoMatting
   
-Animegan2 - pytorch 
+Animegan2 - pytorch:
   https://github.com/bryandlee/animegan2-pytorch
