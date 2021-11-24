@@ -1,10 +1,9 @@
 import cv2
 from cv2 import VideoCapture, imshow, waitKey
 import numpy as np
-import coremltools as ct
+import torch
 import PIL
 from tqdm import tqdm
-import torch
 
 def take_center_N_pixels(in_img,im_size):
 
@@ -20,7 +19,11 @@ def take_center_N_pixels(in_img,im_size):
 
 sz = 512
 
-matting_model = ct.models.model.MLModel('rvm_mobilenetv3_1280x720_s0.375_int8.mlmodel')
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+matting_model = torch.hub.load("PeterL1n/RobustVideoMatting", "mobilenetv3",device = device) # or "resnet50"
+convert_video = torch.hub.load("PeterL1n/RobustVideoMatting", "converter",device = device)
+
 # anime_model = torch.hub.load("bryandlee/animegan2-pytorch:main", "generator", pretrained="face_paint_512_v2")
 # face2paint = torch.hub.load("bryandlee/animegan2-pytorch:main", "face2paint", size=512)
 
