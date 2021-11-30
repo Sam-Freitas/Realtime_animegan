@@ -18,3 +18,7 @@ Robust Video Matting:
   
 Animegan2 - pytorch:
   https://github.com/bryandlee/animegan2-pytorch
+
+## TODO
+
+Get it working on pure tensorflow (pytorch is not supported on metal -- macOS -- right now)
