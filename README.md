@@ -11,13 +11,19 @@ run:
 python realtime_anime.py
 ```
 
-# ML models 
+# ML models and referenced code
 
-Robust Video Matting:
+Robust Video Matting - pytorch:
+
   https://github.com/PeterL1n/RobustVideoMatting
   
 Animegan2 - pytorch:
+
   https://github.com/bryandlee/animegan2-pytorch
+  
+Opening a camera as a single thread:
+
+  https://github.com/jackhanyuan/RobustVideoMatting/blob/master/inference_camera.py
 
 ## TODO
 
